@@ -28,11 +28,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Models\" />
-		<Folder Include="Mapping\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\WebRecipe.Infrastructure\WebRecipe.Infrastructure.csproj" />
 	</ItemGroup>
 

@@ -15,9 +15,12 @@ public class ProductRepository : IProductRepository
         _context = dbWrapper!.DbContext;
     }
 
-    public Task AddProduct(string name, string image, string measure)
+    public async Task<int?> AddProduct(string name, string image, string measure)
     {
-        throw new NotImplementedException();
+        var item = await _context.Products.AddAsync(new ProductEntity { Name = name, Image = image, Measure = measure });
+        await _context.SaveChangesAsync();
+
+        return item.Entity.Id;
     }
 
     public async Task<IEnumerable<ProductEntity>> GetAllProducts()
