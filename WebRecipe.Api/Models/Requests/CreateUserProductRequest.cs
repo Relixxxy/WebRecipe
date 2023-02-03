@@ -1,11 +1,10 @@
-﻿namespace WebRecipe.Api.Data.Entities;
+﻿namespace WebRecipe.Api.Models.Requests;
 
-public class UserProductEntity : BaseEntity
+public class CreateUserProductRequest
 {
     public string Name { get; set; } = null!;
     public string Image { get; set; } = null!;
     public string Measure { get; set; } = null!;
     public double Amount { get; set; }
     public int CategoryId { get; set; }
-    public ProductCategoryEntity Category { get; set; } = null!;
 }

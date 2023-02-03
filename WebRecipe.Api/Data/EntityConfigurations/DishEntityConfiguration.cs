@@ -24,15 +24,15 @@ public class DishEntityConfiguration
         builder.Property(ci => ci.Recipe)
             .IsRequired();
 
-        builder.Property(ci => ci.Group)
-            .IsRequired()
-            .HasMaxLength(100);
-
         builder.Property(ci => ci.Difficulty)
             .IsRequired()
             .HasMaxLength(100);
 
         builder.Property(ci => ci.Image)
            .IsRequired();
+
+        builder.HasOne(ci => ci.Category)
+            .WithMany()
+            .HasForeignKey(ci => ci.CategoryId);
     }
 }

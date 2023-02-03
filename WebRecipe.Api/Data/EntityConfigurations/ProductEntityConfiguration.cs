@@ -21,10 +21,6 @@ public class ProductEntityConfiguration
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(ci => ci.Group)
-            .IsRequired()
-            .HasMaxLength(100);
-
         builder.Property(ci => ci.Measure)
             .IsRequired()
             .HasMaxLength(100);

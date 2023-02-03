@@ -11,7 +11,7 @@ using WebRecipe.Api.Data;
 namespace WebRecipe.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230202175728_InitialCreate")]
+    [Migration("20230202201356_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,10 +24,16 @@ namespace WebRecipe.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.HasSequence("dish_category_hilo")
+                .IncrementsBy(10);
+
             modelBuilder.HasSequence("dish_hilo")
                 .IncrementsBy(10);
 
             modelBuilder.HasSequence("dish_product_hilo")
+                .IncrementsBy(10);
+
+            modelBuilder.HasSequence("product_category_hilo")
                 .IncrementsBy(10);
 
             modelBuilder.HasSequence("product_hilo")
@@ -35,6 +41,28 @@ namespace WebRecipe.Api.Migrations
 
             modelBuilder.HasSequence("user_product_hilo")
                 .IncrementsBy(10);
+
+            modelBuilder.Entity("WebRecipe.Api.Data.Entities.DishCategoryEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "dish_category_hilo");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DishCategory", (string)null);
+                });
 
             modelBuilder.Entity("WebRecipe.Api.Data.Entities.DishEntity", b =>
                 {
@@ -44,12 +72,10 @@ namespace WebRecipe.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "dish_hilo");
 
-                    b.Property<string>("Difficulty")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Group")
+                    b.Property<string>("Difficulty")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
@@ -68,6 +94,8 @@ namespace WebRecipe.Api.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Dish", (string)null);
                 });
@@ -98,6 +126,28 @@ namespace WebRecipe.Api.Migrations
                     b.ToTable("DishProduct", (string)null);
                 });
 
+            modelBuilder.Entity("WebRecipe.Api.Data.Entities.ProductCategoryEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "product_category_hilo");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductCategory", (string)null);
+                });
+
             modelBuilder.Entity("WebRecipe.Api.Data.Entities.ProductEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -105,11 +155,6 @@ namespace WebRecipe.Api.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "product_hilo");
-
-                    b.Property<string>("Group")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -141,10 +186,8 @@ namespace WebRecipe.Api.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("Group")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -162,7 +205,20 @@ namespace WebRecipe.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("UserProduct", (string)null);
+                });
+
+            modelBuilder.Entity("WebRecipe.Api.Data.Entities.DishEntity", b =>
+                {
+                    b.HasOne("WebRecipe.Api.Data.Entities.DishCategoryEntity", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("WebRecipe.Api.Data.Entities.DishProductEntity", b =>
@@ -182,6 +238,17 @@ namespace WebRecipe.Api.Migrations
                     b.Navigation("Dish");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebRecipe.Api.Data.Entities.UserProductEntity", b =>
+                {
+                    b.HasOne("WebRecipe.Api.Data.Entities.ProductCategoryEntity", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("WebRecipe.Api.Data.Entities.DishEntity", b =>

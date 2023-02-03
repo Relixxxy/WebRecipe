@@ -21,18 +21,18 @@ public class UserProductEntityConfiguration
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(ci => ci.Group)
-            .IsRequired()
-            .HasMaxLength(100);
-
         builder.Property(ci => ci.Measure)
             .IsRequired()
             .HasMaxLength(100);
 
         builder.Property(ci => ci.Image)
-           .IsRequired();
+            .IsRequired();
 
         builder.Property(ci => ci.Amount)
-           .IsRequired();
+            .IsRequired();
+
+        builder.HasOne(ci => ci.Category)
+            .WithMany()
+            .HasForeignKey(ci => ci.CategoryId);
     }
 }

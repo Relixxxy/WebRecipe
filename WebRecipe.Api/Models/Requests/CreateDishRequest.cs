@@ -1,12 +1,11 @@
-﻿namespace WebRecipe.Api.Data.Entities;
+﻿namespace WebRecipe.Api.Models.Requests;
 
-public class DishEntity : BaseEntity
+public class CreateDishRequest
 {
     public string Name { get; set; } = null!;
     public string Recipe { get; set; } = null!;
     public string Difficulty { get; set; } = null!;
     public string Image { get; set; } = null!;
     public int CategoryId { get; set; }
-    public DishCategoryEntity Category { get; set; } = null!;
-    public IEnumerable<DishProductEntity> Products { get; set; } = null!;
+    public IEnumerable<DishProductRequest> Products { get; set; } = null!;
 }
