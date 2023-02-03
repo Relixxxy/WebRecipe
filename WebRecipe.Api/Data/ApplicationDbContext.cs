@@ -15,7 +15,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<ProductEntity> Products { get; set; }
     public DbSet<DishEntity> Dishes { get; set; }
     public DbSet<UserProductEntity> UserProducts { get; set; }
-    public DbSet<DishCategoryEntity> DishesCategories { get; set; }
+    public DbSet<DishCategoryEntity> DishCategories { get; set; }
     public DbSet<ProductCategoryEntity> ProductCategories { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {

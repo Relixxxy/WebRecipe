@@ -5,6 +5,6 @@ namespace WebRecipe.Api.Services.Interfaces;
 
 public interface IProductService
 {
-    Task<ItemsResponse<ProductDto>> GetAllProducts();
+    Task<IEnumerable<ProductDto>> GetAllProducts();
     Task<int?> AddProduct(string name, string image, string measure);
 }

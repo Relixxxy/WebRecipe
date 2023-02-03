@@ -15,8 +15,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddScoped<IDishRepository, DishRepository>();
+builder.Services.AddScoped<IUserProductRepository, UserProductRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+builder.Services.AddScoped<IDishService, DishService>();
+builder.Services.AddScoped<IUserProductService, UserProductService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 string connectionString = configuration["ConnectionString"] !;
 builder.Services.AddDbContextFactory<ApplicationDbContext>(opts => opts.UseNpgsql(connectionString));
