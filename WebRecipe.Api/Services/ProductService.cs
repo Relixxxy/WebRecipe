@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using WebRecipe.Api.Data;
 using WebRecipe.Api.Models.Dtos;
-using WebRecipe.Api.Models.Responses;
 using WebRecipe.Api.Repositories.Interfaces;
 using WebRecipe.Api.Services.Interfaces;
 
@@ -29,17 +28,14 @@ public class ProductService
         return ExecuteSafeAsync(() => _productRepository.AddProduct(name, image, measure));
     }
 
-    public async Task<ItemsResponse<ProductDto>> GetAllProducts()
+    public async Task<IEnumerable<ProductDto>> GetAllProducts()
     {
         return await ExecuteSafeAsync(async () =>
         {
-            var products = await _productRepository.GetAllProducts();
-            var productsResponse = new ItemsResponse<ProductDto>()
-            {
-                Items = products.Select(_mapper.Map<ProductDto>),
-            };
+            var items = await _productRepository.GetAllProducts();
+            var products = items.Select(_mapper.Map<ProductDto>);
 
-            return productsResponse;
+            return products;
         });
     }
 }
