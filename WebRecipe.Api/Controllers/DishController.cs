@@ -34,4 +34,12 @@ public class DishController : ControllerBase
         var result = await _dishService.AddDish(request.Name, request.Recipe, request.Difficulty, request.Image, request.CategoryId, request.Products);
         return Ok(new CreateItemResponse<int?>() { Id = result });
     }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(ItemsResponse<DishDto>), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> GetDishesByProducts()
+    {
+        var result = await _dishService.GetDishesByProducts();
+        return Ok(new ItemsResponse<DishDto>() { Items = result });
+    }
 }

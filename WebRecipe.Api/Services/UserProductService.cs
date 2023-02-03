@@ -36,4 +36,38 @@ public class UserProductService
             return products;
         });
     }
+
+    public async Task<IEnumerable<UserProductDto>> GetMissingProducts(IEnumerable<LazyProductDto> dishProducts)
+    {
+        var result = new List<UserProductDto>();
+
+        var userProducts = await _userProductRepository.GetAllProducts();
+
+        foreach (var dp in dishProducts)
+        {
+            bool isFound = false;
+
+            foreach (var up in userProducts)
+            {
+                if (dp.Name.Equals(up.Name))
+                {
+                    var amount = up.Amount - dp.Amount;
+
+                    if (amount < 0)
+                    {
+                        result.Add(new UserProductDto { Name = dp.Name, Amount = Math.Abs(amount) });
+                        isFound = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!isFound)
+            {
+                result.Add(new UserProductDto { Name = dp.Name, Amount = dp.Amount });
+            }
+        }
+
+        return result;
+    }
 }

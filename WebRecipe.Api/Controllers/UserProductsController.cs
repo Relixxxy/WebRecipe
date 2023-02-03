@@ -34,4 +34,12 @@ public class UserProductsController : ControllerBase
         var result = await _productService.AddProduct(request.Name, request.Image, request.Measure, request.Amount, request.CategoryId);
         return Ok(new CreateItemResponse<int?>() { Id = result });
     }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(ItemsResponse<UserProductDto>), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> GetMissingProducts(ProductsRequest request)
+    {
+        var result = await _productService.GetMissingProducts(request.Products);
+        return Ok(new ItemsResponse<UserProductDto> { Items = result });
+    }
 }
