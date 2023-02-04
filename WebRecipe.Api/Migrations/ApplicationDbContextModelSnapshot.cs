@@ -47,7 +47,7 @@ namespace WebRecipe.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "dish_category_hilo");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("BlackIcon")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -55,6 +55,10 @@ namespace WebRecipe.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("WhiteIcon")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -131,7 +135,7 @@ namespace WebRecipe.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseHiLo(b.Property<int>("Id"), "product_category_hilo");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("BlackIcon")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -139,6 +143,10 @@ namespace WebRecipe.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("WhiteIcon")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

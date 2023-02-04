@@ -40,7 +40,8 @@ namespace WebRecipe.Api.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Image = table.Column<string>(type: "text", nullable: false)
+                    WhiteIcon = table.Column<string>(type: "text", nullable: false),
+                    BlackIcon = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,7 +68,8 @@ namespace WebRecipe.Api.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Image = table.Column<string>(type: "text", nullable: false)
+                    WhiteIcon = table.Column<string>(type: "text", nullable: false),
+                    BlackIcon = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

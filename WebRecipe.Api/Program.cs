@@ -25,8 +25,8 @@ builder.Services.AddScoped<IUserProductService, UserProductService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-// string connectionString = configuration["ConnectionString"] !;
-string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") !;
+// string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") !;
+string connectionString = configuration["ConnectionString"] !;
 
 builder.Services.AddDbContextFactory<ApplicationDbContext>(opts => opts.UseNpgsql(connectionString));
 builder.Services.AddScoped<IDbContextWrapper<ApplicationDbContext>, DbContextWrapper<ApplicationDbContext>>();

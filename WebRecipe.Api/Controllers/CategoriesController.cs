@@ -39,7 +39,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(typeof(CreateItemResponse<int?>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> AddProductCategories(CreateCategoryRequest request)
     {
-        var result = await _service.AddProductCategory(request.Name, request.Image);
+        var result = await _service.AddProductCategory(request.Name, request.BlackIcon, request.WhiteIcon);
         return Ok(new CreateItemResponse<int?>() { Id = result });
     }
 
@@ -47,7 +47,7 @@ public class CategoriesController : ControllerBase
     [ProducesResponseType(typeof(CreateItemResponse<int?>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> AddDishCategories(CreateCategoryRequest request)
     {
-        var result = await _service.AddDishCategory(request.Name, request.Image);
+        var result = await _service.AddDishCategory(request.Name, request.BlackIcon, request.WhiteIcon);
         return Ok(new CreateItemResponse<int?>() { Id = result });
     }
 }
