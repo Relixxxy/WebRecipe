@@ -25,7 +25,13 @@ builder.Services.AddScoped<IUserProductService, UserProductService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-string connectionString = configuration["ConnectionString"] !;
+// string connectionString = configuration["ConnectionString"] !;
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+var dbPort = Environment.GetEnvironmentVariable("DB_PORT");
+var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+var dbPassword = Environment.GetEnvironmentVariable("DB_ADMIN_PASSWORD");
+string connectionString = $"server={dbHost};port={dbPort};database={dbName};uid=admin;password={dbPassword};";
+
 builder.Services.AddDbContextFactory<ApplicationDbContext>(opts => opts.UseNpgsql(connectionString));
 builder.Services.AddScoped<IDbContextWrapper<ApplicationDbContext>, DbContextWrapper<ApplicationDbContext>>();
 
