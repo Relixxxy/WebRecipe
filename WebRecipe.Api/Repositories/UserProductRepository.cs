@@ -18,10 +18,23 @@ namespace WebRecipe.Api.Repositories
 
         public async Task<int?> AddProduct(string name, string image, string measure, double amount, int categoryId)
         {
-            var item = await _context.UserProducts.AddAsync(new UserProductEntity { Name = name, Image = image, Measure = measure, Amount = amount, CategoryId = categoryId });
+            var prod = await _context.UserProducts.FirstOrDefaultAsync(p => p.Name.ToLower() == name.ToLower());
+            int id;
+
+            if (prod is null)
+            {
+                var item = await _context.UserProducts.AddAsync(new UserProductEntity { Name = name, Image = image, Measure = measure, Amount = amount, CategoryId = categoryId });
+                id = item.Entity.Id;
+            }
+            else
+            {
+                prod.Amount += amount;
+                id = prod.Id;
+            }
+
             await _context.SaveChangesAsync();
 
-            return item.Entity.Id;
+            return id;
         }
 
         public async Task<IEnumerable<UserProductEntity>> GetAllProducts()
