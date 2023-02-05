@@ -30,11 +30,11 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<IEnumerable<DishCategoryEntity>> GetDishCategories()
     {
-        return await _context.DishCategories.ToListAsync();
+        return await _context.DishCategories.OrderBy(c => c.Name).ToListAsync();
     }
 
     public async Task<IEnumerable<ProductCategoryEntity>> GetProductCategories()
     {
-        return await _context.ProductCategories.ToListAsync();
+        return await _context.ProductCategories.OrderBy(c => c.Name).ToListAsync();
     }
 }
