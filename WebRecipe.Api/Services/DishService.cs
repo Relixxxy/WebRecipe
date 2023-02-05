@@ -61,6 +61,17 @@ public class DishService
         });
     }
 
+    public async Task<IEnumerable<DishDto>> GetDishesByCategory(string name)
+    {
+        return await ExecuteSafeAsync(async () =>
+        {
+            var items = await _dishRepository.GetDishesByCategory(name);
+            var dishes = items.Select(_mapper.Map<DishDto>);
+
+            return dishes;
+        });
+    }
+
     private IEnumerable<DishDto> FindDishes(IEnumerable<DishEntity> dishesEntities, IEnumerable<UserProductEntity> productsEntities)
     {
         var dishes = new List<DishDto>();
