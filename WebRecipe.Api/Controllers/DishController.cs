@@ -42,4 +42,12 @@ public class DishController : ControllerBase
         var result = await _dishService.GetDishesByProducts();
         return Ok(new ItemsResponse<DishDto>() { Items = result });
     }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(ItemsResponse<DishDto>), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> GetDishesByCategory(CategoryNameRequest request)
+    {
+        var result = await _dishService.GetDishesByCategory(request.Name);
+        return Ok(new ItemsResponse<DishDto>() { Items = result });
+    }
 }

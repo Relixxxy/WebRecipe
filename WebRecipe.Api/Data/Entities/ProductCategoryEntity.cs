@@ -3,5 +3,6 @@
 public class ProductCategoryEntity : BaseEntity
 {
     public string Name { get; set; } = null!;
-    public string Image { get; set; } = null!;
+    public string WhiteIcon { get; set; } = null!;
+    public string BlackIcon { get; set; } = null!;
 }

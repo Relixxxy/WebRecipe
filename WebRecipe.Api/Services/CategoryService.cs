@@ -22,14 +22,14 @@ public class CategoryService
         _mapper = mapper;
     }
 
-    public Task<int?> AddDishCategory(string name, string image)
+    public Task<int?> AddDishCategory(string name, string blackIcon, string whiteIcon)
     {
-        return ExecuteSafeAsync(() => _repository.AddDishCategory(name, image));
+        return ExecuteSafeAsync(() => _repository.AddDishCategory(name, blackIcon, whiteIcon));
     }
 
-    public Task<int?> AddProductCategory(string name, string image)
+    public Task<int?> AddProductCategory(string name, string blackIcon, string whiteIcon)
     {
-        return ExecuteSafeAsync(() => _repository.AddProductCategory(name, image));
+        return ExecuteSafeAsync(() => _repository.AddProductCategory(name, blackIcon, whiteIcon));
     }
 
     public async Task<IEnumerable<CategoryDto>> GetDishCategories()

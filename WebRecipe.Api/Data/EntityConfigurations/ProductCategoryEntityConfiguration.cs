@@ -18,10 +18,13 @@ public class ProductCategoryEntityConfiguration
             .IsRequired();
 
         builder.Property(ci => ci.Name)
-        .IsRequired()
-        .HasMaxLength(100);
+            .IsRequired()
+            .HasMaxLength(100);
 
-        builder.Property(ci => ci.Image)
-        .IsRequired();
+        builder.Property(ci => ci.BlackIcon)
+            .IsRequired();
+
+        builder.Property(ci => ci.WhiteIcon)
+            .IsRequired();
     }
 }

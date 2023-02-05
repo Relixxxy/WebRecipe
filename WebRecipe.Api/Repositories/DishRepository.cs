@@ -27,4 +27,9 @@ public class DishRepository : IDishRepository
     {
         return await _context.Dishes.Include(d => d.Category).Include(d => d.Products).ThenInclude(p => p.Product).ToListAsync();
     }
+
+    public async Task<IEnumerable<DishEntity>> GetDishesByCategory(string name)
+    {
+        return await _context.Dishes.Where(d => d.Category.Name.ToLower() == name.ToLower()).Include(d => d.Category).Include(d => d.Products).ThenInclude(p => p.Product).ToListAsync();
+    }
 }

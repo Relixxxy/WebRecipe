@@ -56,9 +56,10 @@ public class UserProductService
                     if (amount < 0)
                     {
                         result.Add(new UserProductDto { Name = dp.Name, Amount = Math.Abs(amount) });
-                        isFound = true;
-                        break;
                     }
+
+                    isFound = true;
+                    break;
                 }
             }
 

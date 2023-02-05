@@ -10,6 +10,7 @@ var configuration = GetConfiguration();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -25,8 +26,8 @@ builder.Services.AddScoped<IUserProductService, UserProductService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-// string connectionString = configuration["ConnectionString"] !;
-string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") !;
+// string connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") !;
+string connectionString = configuration["ConnectionString"] !;
 
 builder.Services.AddDbContextFactory<ApplicationDbContext>(opts => opts.UseNpgsql(connectionString));
 builder.Services.AddScoped<IDbContextWrapper<ApplicationDbContext>, DbContextWrapper<ApplicationDbContext>>();
@@ -41,6 +42,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseRouting();
 app.UseHttpsRedirection();
+
+app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
 
 app.UseAuthorization();
 
